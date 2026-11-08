@@ -3,33 +3,6 @@
 Web app de généalogie, gratuite à héberger (Cloudflare Workers + D1 + R2), utilisable sur ordinateur et téléphone (installable comme une appli).
 👉 **Pour avoir ta propre version en ligne** (gratuit, avec ta propre base de données) : suis **[TUTO.md](TUTO.md)**. Comptes, mises à jour, import GEDCOM et sauvegardes y sont aussi expliqués.
 
-## Où en est le projet
-
-| Étape | Contenu | État |
-|---|---|---|
-| Maquettes | 3 directions dans `maquettes/` — choix : **B « Épuré », palette Forêt** | ✅ |
-| 1 | Socle, connexion, arbres (créer, renommer, supprimer), réglages | ✅ |
-| 2 | Personnes, liens familiaux, unions, événements, dates incertaines, fiches, formulaires | ✅ |
-| 3 | Vue arbre « personne centrale » (déplacement, zoom, pincement) + vue « famille proche » sur téléphone | ✅ |
-| 4 | Sources et citations (fiabilité), photos et PDF dans R2 (compression, visionneuse, photo principale) | ✅ |
-| 5 | Numérotation Sosa (implexes compris), alertes d'incohérence, liste avec filtres (nom, lieu, période, fiche incomplète) | ✅ |
-| 6 | Import GEDCOM 5.5.1 (UTF-8, Windows-1252, ANSEL ; résumé avant validation), export GEDCOM, sauvegarde ZIP complète | ✅ |
-| 7 | Partage et masquage des vivants, lien de parenté, éventail 4 à 8 générations, carte (Leaflet, Nominatim), rappels d'anniversaires, PDF (fiche, ascendance, descendance), lecture hors ligne | ✅ |
-| Mise en ligne | Base D1, R2 (plafond 9,5 Go), notifications, invitations par lien — voir [TUTO.md](TUTO.md) | ✅ |
-
-## Choix technique : la vue arbre
-
-Deux options étaient possibles : la bibliothèque libre [family-chart](https://github.com/donatso/family-chart) (licence MIT, basée sur d3) ou un dessin « maison ». **Choix : maison**, pour quatre raisons.
-
-| | family-chart | Dessin maison (retenu) |
-|---|---|---|
-| Poids | d3 + la bibliothèque : environ 100 Ko de plus à télécharger | ~300 lignes, aucune dépendance |
-| Style | son propre dessin, difficile à accorder au style B / Forêt et au mode sombre | les mêmes cartes, couleurs et polices que le reste de l'appli |
-| Téléphone | une seule vue, à zoomer | vue graphique **et** vue « famille proche » sans zoom |
-| Maintenance | dépend d'un petit projet tenu par une seule personne | code commenté en français, testé (`tests/disposition.test.ts`) |
-
-La vue « personne centrale » n'affiche qu'une fenêtre autour d'une personne (2 à 4 générations d'ancêtres, 2 de descendants) : le calcul (`src/lib/disposition.ts`) ne porte que sur quelques dizaines de cartes, même dans un arbre de 2 500 personnes (moins de 20 ms par vue dans les tests, environ 30 ms pour recentrer dans le navigateur).
-
 ## Organisation du code
 
 | Dossier | Contenu |
