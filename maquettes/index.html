@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maquettes GeneaView</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cormorant+Garamond:wght@600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+/* Page de choix entre les 3 maquettes. Mode clair / sombre automatique. */
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7f9; --surface: #fff; --surface-2: #f1f3f6; --border: #e4e7ec;
+  --text: #101828; --text-2: #475467; --text-3: #667085;
+  --plus: #067647; --moins: #b42318; --accent: #4f46e5;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0b0d12; --surface: #12161f; --surface-2: #1a1f2b; --border: #252b38; --text: #f2f4f7; --text-2: #b4bccb; --text-3: #8b94a7; --plus: #47cd89; --moins: #f97066; --accent: #818cf8; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 400 16px/1.6 Inter, system-ui, sans-serif; }
+main { max-width: 1180px; margin: 0 auto; padding: 48px 24px 64px; }
+h1 { font-size: 36px; letter-spacing: -0.02em; margin: 0 0 6px; }
+.intro { color: var(--text-2); max-width: 760px; margin: 0 0 32px; }
+.grille { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.carte { display: flex; flex-direction: column; overflow: hidden; border-radius: 18px; border: 1px solid var(--border); background: var(--surface); }
+.apercu { height: 190px; position: relative; display: grid; place-items: center; overflow: hidden; }
+.apercu.a { background: #f1e9db; color: #2f2519; }
+.apercu.b { background: #f5f6f8; color: #101828; }
+.apercu.c { background: radial-gradient(1px 1px at 20% 30%, #fff8, transparent), radial-gradient(1px 1px at 70% 20%, #fff8, transparent), radial-gradient(1px 1px at 85% 70%, #fff6, transparent), radial-gradient(ellipse at 50% 0, #0e1426, #080c18); color: #e9ecf7; }
+.apercu .nom { position: absolute; left: 18px; bottom: 14px; font-size: 30px; line-height: 1; }
+.apercu.a .nom { font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+.apercu.b .nom { font-weight: 700; font-size: 24px; letter-spacing: -0.02em; }
+.apercu.c .nom { font-family: 'Instrument Serif', serif; font-style: italic; color: #e8c77d; }
+.lettre { position: absolute; top: 14px; left: 18px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; font: 700 14px Inter, sans-serif; }
+.a .lettre { background: #56704f; color: #fbf7ee; }
+.b .lettre { background: #4f46e5; color: #fff; }
+.c .lettre { background: #e8c77d; color: #1a1406; }
+.nuancier { position: absolute; top: 16px; right: 16px; display: flex; gap: 4px; }
+.nuancier i { width: 16px; height: 16px; border-radius: 50%; border: 1px solid rgb(0 0 0 / .1); }
+.corps { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+.corps > p { color: var(--text-2); margin: 0; font-size: 15px; }
+h3 { margin: 0 0 4px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-3); }
+ul { margin: 0; padding: 0; list-style: none; font-size: 14.5px; }
+li { padding: 3px 0 3px 22px; position: relative; }
+.plus li::before { content: '+'; position: absolute; left: 4px; font-weight: 700; color: var(--plus); }
+.moins li::before { content: '–'; position: absolute; left: 4px; font-weight: 700; color: var(--moins); }
+.ouvrir { margin-top: auto; display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 46px; border-radius: 10px; background: var(--text); color: var(--bg); text-decoration: none; font-weight: 600; }
+.ouvrir:hover { opacity: .9; }
+.ouvrir:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+section.bloc { margin-top: 44px; }
+section.bloc h2 { font-size: 22px; margin: 0 0 14px; letter-spacing: -0.01em; }
+.tableau { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 640px; }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+thead th { background: var(--surface-2); font-size: 13px; color: var(--text-2); }
+td:first-child { color: var(--text-2); font-weight: 500; }
+.note { display: inline-flex; gap: 2px; }
+.note i { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
+.note i.on { background: var(--text); }
+.conseil { padding: 20px 22px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text-2); }
+.conseil p { margin: 0 0 10px; }
+.conseil p:last-child { margin: 0; }
+.conseil strong { color: var(--text); }
+@media (max-width: 960px) { .grille { grid-template-columns: 1fr; } h1 { font-size: 28px; } main { padding: 28px 16px 48px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>GeneaView — 3 directions visuelles</h1>
+  <p class="intro">Chaque maquette montre les 4 mêmes écrans (accueil, arbre, fiche, formulaire) avec la même famille fictive, sur ordinateur et téléphone côte à côte. Les boutons en haut de chaque maquette permettent de changer d’écran, d’appareil et de passer en mode clair ou sombre. Sur un vrai téléphone, la version téléphone s’affiche en plein écran.</p>
+
+  <div class="grille">
+    <article class="carte">
+      <div class="apercu a">
+        <span class="lettre">A</span>
+        <span class="nuancier"><i style="background:#faf5ea"></i><i style="background:#8c5a2e"></i><i style="background:#56704f"></i><i style="background:#b0756a"></i></span>
+        <svg width="190" height="110" viewBox="0 0 190 110" fill="none" stroke="#8c5a2e" stroke-width="1.2"><rect x="10" y="8" width="70" height="26" fill="#faf5ea"/><rect x="110" y="8" width="70" height="26" fill="#faf5ea"/><path d="M80 21h30" stroke-dasharray="2 3"/><path d="M95 21v24"/><rect x="60" y="45" width="70" height="26" fill="#faf5ea" stroke="#56704f" stroke-width="2"/><path d="M95 71v12M60 83h70M60 83v6M130 83v6"/><rect x="28" y="89" width="64" height="20" fill="#faf5ea"/><rect x="100" y="89" width="64" height="20" fill="#faf5ea"/></svg>
+        <span class="nom">Archive</span>
+      </div>
+      <div class="corps">
+        <p>Papier ancien, typographie à empattements, sépia et vert sauge. Un livre de famille qu’on feuillette.</p>
+        <div><h3>Forces</h3><ul class="plus"><li>Ambiance chaleureuse, très « généalogie »</li><li>Fiche personne riche et agréable à lire (frise, galerie façon album)</li><li>Arbre classique, compris immédiatement</li><li>Se prête très bien à l’impression PDF</li></ul></div>
+        <div><h3>Faiblesses</h3><ul class="moins"><li>Peut sembler « daté » à certains</li><li>Polices à empattements moins lisibles en petit sur téléphone</li><li>Arbre réduit sur téléphone : il faut zoomer</li></ul></div>
+        <a class="ouvrir" href="a-archive.html">Ouvrir la maquette A →</a>
+      </div>
+    </article>
+
+    <article class="carte">
+      <div class="apercu b">
+        <span class="lettre">B</span>
+        <span class="nuancier"><i style="background:#ffffff"></i><i style="background:#4f46e5"></i><i style="background:#3b82f6"></i><i style="background:#db2777"></i></span>
+        <svg width="190" height="110" viewBox="0 0 190 110" fill="none" stroke="#d0d5dd" stroke-width="2"><rect x="10" y="8" width="70" height="24" rx="8" fill="#fff"/><rect x="110" y="8" width="70" height="24" rx="8" fill="#fff"/><path d="M80 20h30" stroke="#f9a8d4"/><path d="M95 20v25"/><rect x="58" y="45" width="74" height="26" rx="9" fill="#fff" stroke="#4f46e5"/><circle cx="72" cy="58" r="7" fill="#e0e7ff" stroke="none"/><path d="M95 71v10q0 6-6 6H66q-6 0-6 6M95 81q0 6 6 6h23q6 0 6 6"/><rect x="28" y="93" width="64" height="16" rx="7" fill="#fff"/><rect x="100" y="93" width="64" height="16" rx="7" fill="#fff"/></svg>
+        <span class="nom">Épuré</span>
+      </div>
+      <div class="corps">
+        <p>Moderne, cartes arrondies, beaucoup de blanc. <strong>Nouveau :</strong> 3 palettes plus chaleureuses à essayer en haut de la maquette (Terre cuite, Forêt, Nuit &amp; or), avec des titres en Fraunces.</p>
+        <div><h3>Forces</h3><ul class="plus"><li>Le plus lisible et le plus simple au premier abord</li><li>Sur téléphone, vue « famille proche » pensée pour le pouce, sans zoom</li><li>Fiche avec onglets : on va loin sans surcharger</li><li>Le plus rapide à construire (styles repris de Resale)</li></ul></div>
+        <div><h3>Faiblesses</h3><ul class="moins"><li>Moins de caractère, look « appli de bureau »</li><li>Ressemble à beaucoup d’autres applis</li></ul></div>
+        <a class="ouvrir" href="b-epure.html">Ouvrir la maquette B →</a>
+      </div>
+    </article>
+
+    <article class="carte">
+      <div class="apercu c">
+        <span class="lettre">C</span>
+        <span class="nuancier"><i style="background:#080c18"></i><i style="background:#e8c77d"></i><i style="background:#8a97ff"></i><i style="background:#5fd3bb"></i></span>
+        <svg width="170" height="120" viewBox="-85 -78 170 120"><g stroke="#080c18" stroke-width="1.5"><path d="M-75 0A75 75 0 0 1 0 -75L0 -50A50 50 0 0 0 -50 0Z" fill="#3a417a"/><path d="M0 -75A75 75 0 0 1 75 0L50 0A50 50 0 0 0 0 -50Z" fill="#7a5a33"/><path d="M-50 0A50 50 0 0 1 0 -50L0 -22A22 22 0 0 0 -22 0Z" fill="#6670d6"/><path d="M0 -50A50 50 0 0 1 50 0L22 0A22 22 0 0 0 0 -22Z" fill="#c38f50"/><path d="M-50 4A50 50 0 0 0 50 4L22 4A22 22 0 0 1 -22 4Z" fill="#3c9c89"/></g><circle r="19" fill="#111829" stroke="#e8c77d" stroke-width="1.5"/></svg>
+        <span class="nom">Constellation</span>
+      </div>
+      <div class="corps">
+        <p>Fond nuit élégant, or et bleu. L’arbre en éventail est la pièce maîtresse ; version claire « aube ».</p>
+        <div><h3>Forces</h3><ul class="plus"><li>Très original, effet « waouh »</li><li>L’éventail montre d’un coup d’œil les ancêtres manquants</li><li>Ligne de vie avec le contexte historique (guerres)</li><li>L’ajout d’un parent se fait depuis l’éventail, avec détection de doublon</li></ul></div>
+        <div><h3>Faiblesses</h3><ul class="moins"><li>L’éventail montre surtout les ancêtres : moins adapté aux grandes fratries et aux conjoints multiples</li><li>Textes petits dans les anneaux extérieurs</li><li>Le plus long à construire et à peaufiner</li></ul></div>
+        <a class="ouvrir" href="c-constellation.html">Ouvrir la maquette C →</a>
+      </div>
+    </article>
+  </div>
+
+  <section class="bloc">
+    <h2>Comparaison rapide</h2>
+    <div class="tableau">
+      <table>
+        <thead><tr><th>Critère</th><th>A — Archive</th><th>B — Épuré</th><th>C — Constellation</th></tr></thead>
+        <tbody>
+          <tr><td>Simplicité au premier abord</td><td>Bonne</td><td>Excellente</td><td>Moyenne (il faut apprendre à lire l’éventail)</td></tr>
+          <tr><td>Confort sur téléphone</td><td>Correct (arbre à zoomer)</td><td>Excellent (vue famille proche)</td><td>Bon (éventail + fiche en bas)</td></tr>
+          <tr><td>Grands arbres (2 000+ personnes)</td><td>Très bon</td><td>Très bon (mini-carte)</td><td>Bon pour les ancêtres, limité pour les descendants</td></tr>
+          <tr><td>Impression A4 / A3</td><td>Excellente</td><td>Bonne</td><td>Très belle en éventail, moins pour la fiche (fond sombre)</td></tr>
+          <tr><td>Originalité</td><td>Bonne</td><td>Faible</td><td>Excellente</td></tr>
+          <tr><td>Temps de développement</td><td>Moyen</td><td>Le plus court</td><td>Le plus long</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="bloc">
+    <h2>Comment choisir</h2>
+    <div class="conseil">
+      <p><strong>On peut mélanger.</strong> Par exemple : le style <strong>B</strong> pour l’ensemble, la <strong>vue en éventail de C</strong> (déjà prévue dans la v1) et la <strong>ligne de vie</strong> de C dans la fiche. Ou l’ambiance <strong>A</strong> avec la vue « famille proche » de B sur téléphone.</p>
+      <p>Dites-moi simplement : « A », « B », « C », ou « B avec l’éventail de C », etc. Je présenterai ensuite le plan technique en 15 lignes avant de coder.</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

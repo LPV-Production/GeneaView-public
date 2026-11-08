@@ -1,0 +1,42 @@
+{
+  "name": "geneaview",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "dev:full": "astro build && wrangler dev",
+    "db:local": "wrangler d1 migrations apply geneaview --local",
+    "db:remote": "wrangler d1 migrations apply geneaview --remote",
+    "compte": "node scripts/creer-compte.mjs",
+    "test": "vitest run",
+    "deploy": "astro build && wrangler deploy",
+    "icones": "node scripts/generer-icones.mjs",
+    "cles-push": "node scripts/generer-cles-push.mjs",
+    "astro": "astro"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "^9.1.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "astro": "^7.4.1",
+    "fflate": "^0.8.3",
+    "leaflet": "^1.9.4",
+    "svelte": "^5.57.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261019.1",
+    "@types/leaflet": "^1.9.20",
+    "sharp": "^0.35.5",
+    "vitest": "^5.0.5",
+    "wrangler": "^4.151.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "workerd@1.20261019.1": true
+  }
+}

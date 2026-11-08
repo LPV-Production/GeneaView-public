@@ -1,0 +1,29 @@
+# Dépendances et fichiers générés
+node_modules/
+dist/
+.astro/
+.wrangler/
+
+# Secrets et variables locales (mots de passe, clés) : JAMAIS sur GitHub
+.env
+.env.*
+.dev.vars*
+
+# Systèmes et éditeurs
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/*
+!.vscode/extensions.json
+.idea/
+npm-debug.log*
+
+# Réglages locaux de Claude Code
+.claude/
+
+# Fichiers personnels de test (GEDCOM, sauvegardes) : restent sur ton PC
+*.local.*
+sauvegardes/
+
+# Comptes de test locaux
+compte-test.local.txt

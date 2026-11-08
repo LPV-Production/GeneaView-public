@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maquette A — Archive · GeneaView</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="commun/cadre.css" />
+<style>
+/* ============================================================
+   MAQUETTE A — « ARCHIVE »
+   Papier ancien, encre sépia, vert sauge. Ambiance livre de famille.
+   ============================================================ */
+:root {
+  color-scheme: light;
+  --bg: #f1e9db;
+  --surface: #faf5ea;
+  --surface-2: #ece2cf;
+  --border: #d8c9ae;
+  --border-strong: #bfa983;
+  --text: #2f2519;
+  --text-2: #5b4a36;
+  --text-3: #85714f;
+  --accent: #56704f;          /* vert sauge */
+  --accent-hover: #455d3f;
+  --accent-soft: #dfe6d5;
+  --on-accent: #fbf7ee;
+  --sepia: #8c5a2e;           /* dates, filets */
+  --homme: #6d8a92;
+  --femme: #b0756a;
+  --preuve: #3f6b3a; --preuve-soft: #dfe9d5;
+  --indice: #94650f; --indice-soft: #f3e4c2;
+  --hypothese: #8a4a3c; --hypothese-soft: #f1dad3;
+  --photo-bg: #c9b48f; --photo-fg: #8d7350;
+  --ombre: 0 1px 0 rgb(255 255 255 / .6) inset, 0 1px 2px rgb(70 50 20 / .12), 0 6px 18px -8px rgb(70 50 20 / .25);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .1 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  --titre: 'Cormorant Garamond', Garamond, 'Times New Roman', serif;
+  --texte: 'Source Serif 4', Georgia, serif;
+  --cadre-bg: #e4dac8;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #1d1914;
+  --surface: #27221b;
+  --surface-2: #322b22;
+  --border: #45392b;
+  --border-strong: #5e4e3a;
+  --text: #f0e6d4;
+  --text-2: #cdbb9e;
+  --text-3: #9d8a6c;
+  --accent: #a3bb98;
+  --accent-hover: #b8ccae;
+  --accent-soft: rgb(163 187 152 / .14);
+  --on-accent: #1d1914;
+  --sepia: #d6a874;
+  --homme: #8fb0b8;
+  --femme: #d39a8d;
+  --preuve: #a9cf9c; --preuve-soft: rgb(169 207 156 / .13);
+  --indice: #e2bb6a; --indice-soft: rgb(226 187 106 / .13);
+  --hypothese: #e3a091; --hypothese-soft: rgb(227 160 145 / .13);
+  --photo-bg: #4a3f30; --photo-fg: #7d6a4f;
+  --ombre: 0 1px 0 rgb(255 255 255 / .03) inset, 0 8px 20px -10px rgb(0 0 0 / .7);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .9 0 0 0 0 .7 0 0 0 .04 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  --cadre-bg: #14110d;
+}
+
+/* ---------- Base de l'appli ---------- */
+.gv-ecran { font: 400 16px/1.55 var(--texte); color: var(--text); background: var(--bg) var(--grain); }
+.gv-ecran h1, .gv-ecran h2, .gv-ecran h3 { font-family: var(--titre); font-weight: 600; margin: 0; line-height: 1.1; letter-spacing: .005em; }
+.gv-ecran p { margin: 0; }
+.gv-ecran button, .gv-ecran input, .gv-ecran select, .gv-ecran textarea { font: inherit; color: inherit; }
+.ic { flex: none; }
+.app { height: 100%; display: flex; }
+.app.tel { flex-direction: column; }
+.principal { flex: 1; min-width: 0; overflow: auto; position: relative; }
+.petites-caps { font-variant: small-caps; letter-spacing: .08em; text-transform: lowercase; font-size: 1.05em; color: var(--text-3); }
+.sepia { color: var(--sepia); }
+
+/* Barre de côté (ordinateur) */
+.cote { width: 244px; flex: none; display: flex; flex-direction: column; gap: 4px; padding: 22px 16px; border-right: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 60%, transparent); }
+.logo { display: flex; align-items: center; gap: 10px; padding: 0 8px 18px; font: 700 26px/1 var(--titre); color: var(--text); }
+.logo-sceau { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--sepia); color: var(--sepia); }
+.arbre-courant { margin: 0 0 14px; padding: 12px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); box-shadow: var(--ombre); }
+.arbre-courant small { display: block; color: var(--text-3); font-size: 12px; }
+.arbre-courant strong { font: 600 18px/1.2 var(--titre); }
+.nav-el { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; border-radius: 4px; background: none; color: var(--text-2); cursor: pointer; text-align: left; font-size: 15px; }
+.nav-el:hover { background: var(--surface-2); color: var(--text); }
+.nav-el[aria-current='page'] { background: var(--accent-soft); color: var(--accent-hover); font-weight: 600; }
+:root[data-theme='dark'] .nav-el[aria-current='page'] { color: var(--accent); }
+.cote-pied { margin-top: auto; padding: 12px; font-size: 13px; color: var(--text-3); border-top: 1px dashed var(--border-strong); }
+
+/* Téléphone : barre d'état, en-tête, navigation du bas */
+.barre-statut { height: 50px; flex: none; display: flex; align-items: flex-end; justify-content: space-between; padding: 0 30px 6px 34px; font: 600 15px system-ui, sans-serif; }
+.entete-tel { display: flex; align-items: center; gap: 8px; padding: 6px 16px 10px; border-bottom: 1px solid var(--border); }
+.entete-tel h1 { font-size: 26px; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav-bas { flex: none; display: grid; grid-template-columns: repeat(5, 1fr); padding: 6px 6px 26px; border-top: 1px solid var(--border); background: var(--surface); }
+.nav-bas .nav-el { flex-direction: column; gap: 2px; padding: 6px 0; font-size: 11px; text-align: center; justify-content: center; }
+.nav-bas .nav-el[aria-current='page'] { background: none; }
+
+/* Boutons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 0 16px; border-radius: 4px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); cursor: pointer; font-size: 15px; white-space: nowrap; }
+.btn:hover { background: var(--surface-2); }
+.btn-primaire { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn-primaire:hover { background: var(--accent-hover); }
+.btn-discret { border-color: transparent; background: transparent; }
+.btn-rond { width: 42px; padding: 0; border-radius: 50%; }
+.btn-petit { min-height: 34px; padding: 0 12px; font-size: 14px; }
+.gv-ecran :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Encadrés « papier » */
+.feuille { background: var(--surface); border: 1px solid var(--border); border-radius: 3px; box-shadow: var(--ombre); }
+.rubrique { display: flex; align-items: baseline; gap: 12px; margin: 0 0 14px; }
+.rubrique h2 { font-size: 24px; }
+.rubrique::after { content: ''; flex: 1; border-bottom: 1px solid var(--border-strong); translate: 0 -5px; }
+.rubrique .compte { order: 2; font-size: 13px; color: var(--text-3); }
+.rubrique .btn { order: 3; }
+.ornement { display: block; width: 120px; height: 12px; margin: 10px auto; color: var(--sepia); opacity: .6; }
+
+/* Portraits */
+.portrait { display: inline-grid; place-items: center; flex: none; overflow: hidden; width: 44px; height: 52px; border-radius: 2px; font: 600 17px var(--titre); color: var(--text-2); background: var(--surface-2); border: 1px solid var(--border-strong); }
+.portrait.photo { border: 3px solid #fffaf0; outline: 1px solid var(--border-strong); filter: sepia(.4); }
+:root[data-theme='dark'] .portrait.photo { border-color: #3a3226; }
+.portrait svg { width: 100%; height: 100%; display: block; }
+.portrait.rond { border-radius: 50%; width: 40px; height: 40px; }
+
+/* Badges */
+.badge { display: inline-flex; align-items: center; gap: 5px; padding: 1px 9px; border-radius: 3px; font-size: 13px; border: 1px solid var(--border-strong); color: var(--text-2); background: var(--surface); white-space: nowrap; }
+.badge.sosa { border-color: var(--sepia); color: var(--sepia); font-variant-numeric: oldstyle-nums; }
+.badge.preuve { border-color: transparent; background: var(--preuve-soft); color: var(--preuve); }
+.badge.indice { border-color: transparent; background: var(--indice-soft); color: var(--indice); }
+.badge.hypothese { border-color: transparent; background: var(--hypothese-soft); color: var(--hypothese); }
+.badge.alerte { border-color: transparent; background: var(--indice-soft); color: var(--indice); }
+
+/* ===================== ACCUEIL ===================== */
+.accueil { padding: 44px 48px 60px; display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; max-width: 1100px; }
+.accueil h1 { font-size: 52px; font-weight: 600; }
+.accueil .bonjour { margin-bottom: 4px; }
+.recherche { position: relative; margin: 22px 0 32px; }
+.recherche .ic { position: absolute; left: 16px; top: 50%; translate: 0 -50%; color: var(--text-3); }
+.recherche input { width: 100%; min-height: 52px; padding: 0 16px 0 48px; border: 1px solid var(--border-strong); border-radius: 3px; background: var(--surface); font-size: 16px; box-shadow: inset 0 1px 3px rgb(70 50 20 / .08); }
+.recherche input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.recherche kbd { position: absolute; right: 12px; top: 50%; translate: 0 -50%; font: 12px system-ui; color: var(--text-3); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; }
+.livres { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
+.livre { position: relative; display: flex; flex-direction: column; gap: 6px; min-height: 196px; padding: 22px 20px 18px 30px; text-align: left; cursor: pointer; border: 1px solid var(--border); border-radius: 2px 6px 6px 2px; background: var(--surface); box-shadow: var(--ombre); }
+.livre::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 12px; border-right: 1px solid var(--border-strong); background: var(--dos, var(--accent)); opacity: .85; }
+.livre[data-c='2'] { --dos: var(--sepia); }
+.livre[data-c='3'] { --dos: var(--femme); }
+.livre:hover { translate: 0 -2px; }
+.livre h3 { font-size: 26px; }
+.livre .meta { font-size: 14px; color: var(--text-2); }
+.livre .pied { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; color: var(--text-3); }
+.livre.nouveau { align-items: center; justify-content: center; text-align: center; border: 1.5px dashed var(--border-strong); background: transparent; box-shadow: none; color: var(--text-2); }
+.livre.nouveau::before { display: none; }
+.colonne-droite { display: flex; flex-direction: column; gap: 26px; padding-top: 12px; }
+.colonne-droite h2 { font-size: 22px; margin-bottom: 10px; }
+.liste-simple { list-style: none; margin: 0; padding: 0; }
+.liste-simple li { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px dotted var(--border-strong); cursor: pointer; }
+.liste-simple li:last-child { border-bottom: 0; }
+.liste-simple .t { display: flex; flex-direction: column; line-height: 1.3; }
+.liste-simple small { color: var(--text-3); font-size: 13px; }
+.commemo { padding: 14px 16px; border-left: 3px solid var(--sepia); background: var(--surface); font-style: italic; }
+.commemo + .commemo { margin-top: 10px; }
+.commemo small { display: block; font-style: normal; color: var(--text-3); font-size: 13px; }
+[data-device='tel'] .accueil { display: block; padding: 20px 16px 30px; }
+[data-device='tel'] .accueil h1 { font-size: 36px; }
+[data-device='tel'] .recherche { margin: 14px 0 22px; }
+[data-device='tel'] .recherche kbd { display: none; }
+[data-device='tel'] .livres { grid-template-columns: 1fr; gap: 12px; }
+[data-device='tel'] .livre { min-height: 0; padding: 16px 16px 14px 28px; }
+[data-device='tel'] .livre.nouveau { flex-direction: row; padding: 14px; }
+[data-device='tel'] .colonne-droite { padding-top: 26px; }
+
+/* ===================== ARBRE ===================== */
+.arbre-ecran { height: 100%; display: flex; flex-direction: column; }
+.outils { display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 70%, transparent); }
+.outils h1 { font-size: 28px; margin-right: auto; white-space: nowrap; }
+.outils .recherche { margin: 0; width: 240px; }
+.outils .recherche input { min-height: 40px; font-size: 15px; }
+.choix { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 4px; overflow: hidden; }
+.choix button { display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 0 12px; border: 0; background: var(--surface); cursor: pointer; color: var(--text-2); font-size: 14px; }
+.choix button + button { border-left: 1px solid var(--border-strong); }
+.choix button[aria-pressed='true'] { background: var(--accent); color: var(--on-accent); }
+.arbre-scene { flex: 1; overflow: auto; position: relative;
+  background:
+    radial-gradient(ellipse at center, transparent 50%, rgb(120 80 30 / .08) 100%),
+    var(--bg) var(--grain); }
+:root[data-theme='dark'] .arbre-scene { background: radial-gradient(ellipse at center, transparent 40%, rgb(0 0 0 / .35) 100%), var(--bg) var(--grain); }
+.arbre-plan { margin: 36px 40px 70px 40px; }
+.trait { fill: none; stroke: var(--sepia); stroke-width: 1.4; opacity: .7; }
+.trait-union { stroke: var(--sepia); stroke-width: 1.4; stroke-dasharray: 2 3; opacity: .9; }
+.carte-p { position: relative; display: flex; align-items: center; gap: 10px; width: 100%; height: 100%; padding: 8px 10px 8px 12px; border: 1px solid var(--border-strong); border-radius: 2px; background: var(--surface); box-shadow: var(--ombre); cursor: pointer; text-align: left; }
+.carte-p::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--homme); }
+.carte-p[data-sexe='F']::after { background: var(--femme); }
+.carte-p:hover { border-color: var(--sepia); }
+.carte-p .portrait { width: 38px; height: 46px; font-size: 15px; }
+.cp-txt { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.cp-nom { font: 600 18px/1.1 var(--titre); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cp-dates { font-size: 13px; font-style: italic; color: var(--text-2); margin-top: 3px; }
+.cp-sosa { position: absolute; top: 4px; right: 6px; font-size: 11px; color: var(--sepia); font-variant-numeric: oldstyle-nums; }
+.cp-vivant { font-style: normal; color: var(--text-3); }
+.est-centre .carte-p { border: 2px solid var(--accent); box-shadow: 0 0 0 5px var(--accent-soft), var(--ombre); }
+.ajouts { position: absolute; right: calc(100% + 14px); top: 50%; translate: 0 -50%; display: flex; flex-direction: column; gap: 6px; opacity: 0; pointer-events: none; transition: opacity .15s; }
+.noeud:hover .ajouts, .noeud:focus-within .ajouts, .est-centre .ajouts { opacity: 1; pointer-events: auto; }
+.ajouts button { display: inline-flex; align-items: center; justify-content: flex-end; gap: 4px; min-height: 30px; padding: 0 10px; border: 1px dashed var(--accent); border-radius: 3px; background: var(--surface); color: var(--accent-hover); font-size: 13px; cursor: pointer; white-space: nowrap; }
+:root[data-theme='dark'] .ajouts button { color: var(--accent); }
+.ajouts button:hover { border-style: solid; background: var(--accent-soft); }
+.rang-etiquette { position: absolute; left: -150px; width: 120px; text-align: right; font-size: 13px; }
+.zooms { position: absolute; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 6px; }
+.zooms .btn { background: var(--surface); box-shadow: var(--ombre); }
+.legende { position: absolute; left: 20px; bottom: 20px; display: flex; gap: 14px; padding: 8px 12px; font-size: 13px; color: var(--text-2); background: var(--surface); border: 1px solid var(--border); border-radius: 3px; }
+.legende i { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; }
+.feuille-bas { flex: none; padding: 14px 16px 12px; border-top: 1px solid var(--border-strong); background: var(--surface); box-shadow: 0 -8px 20px -10px rgb(60 40 10 / .25); }
+.feuille-bas .poignee { width: 40px; height: 4px; border-radius: 4px; margin: -4px auto 10px; background: var(--border-strong); }
+.feuille-bas .qui { display: flex; align-items: center; gap: 12px; }
+.feuille-bas h2 { font-size: 24px; }
+.feuille-bas .actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.feuille-bas .actions .btn { min-height: 40px; font-size: 14px; padding: 0 6px; border-style: dashed; color: var(--accent-hover); }
+[data-device='tel'] .arbre-plan { zoom: .74; margin: 40px 30px 60px 30px; }
+[data-device='tel'] .zooms { bottom: auto; top: 112px; }
+[data-device='tel'] .ajouts, [data-device='tel'] .rang-etiquette { display: none; }
+[data-device='tel'] .outils { padding: 4px 12px 10px; gap: 8px; }
+[data-device='tel'] .outils h1 { font-size: 22px; }
+[data-device='tel'] .zooms { right: 12px; bottom: 12px; }
+[data-device='tel'] .zooms .btn { width: 38px; min-height: 38px; }
+
+/* ===================== FICHE ===================== */
+.fiche { padding: 36px 48px 60px; max-width: 1060px; }
+.fil { font-size: 14px; color: var(--text-3); margin-bottom: 18px; display: flex; gap: 6px; align-items: center; }
+.fil a { color: var(--accent-hover); text-decoration: none; cursor: pointer; }
+:root[data-theme='dark'] .fil a { color: var(--accent); }
+.en-tete-fiche { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 28px; align-items: center; padding: 26px 28px; position: relative; }
+.en-tete-fiche::before { content: ''; position: absolute; inset: 6px; border: 1px solid var(--border); pointer-events: none; }
+.en-tete-fiche .portrait { width: 116px; height: 140px; border-width: 6px; box-shadow: 2px 3px 8px rgb(60 40 10 / .3); rotate: -1.5deg; }
+.en-tete-fiche h1 { font-size: 48px; font-weight: 600; }
+.en-tete-fiche h1 .nom-famille { font-variant: small-caps; letter-spacing: .04em; }
+.surnom { font-style: italic; color: var(--text-2); margin-top: 2px; }
+.vie { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 4px 18px; color: var(--text-2); }
+.vie span { display: inline-flex; align-items: center; gap: 6px; }
+.vie b { font-weight: 600; color: var(--text); }
+.etiquettes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.actions-fiche { display: flex; flex-direction: column; gap: 8px; align-self: start; }
+.colonnes { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 36px; margin-top: 34px; }
+.colonnes > div { display: flex; flex-direction: column; gap: 34px; min-width: 0; }
+/* Frise chronologique */
+.frise { list-style: none; margin: 0; padding: 0; position: relative; }
+.frise::before { content: ''; position: absolute; left: 118px; top: 8px; bottom: 8px; border-left: 1px solid var(--border-strong); }
+.frise li { display: grid; grid-template-columns: 104px 30px minmax(0, 1fr); gap: 0 0; padding: 0 0 18px; }
+.frise .quand { text-align: right; padding-right: 0; font-size: 14px; color: var(--sepia); font-variant-numeric: oldstyle-nums; line-height: 1.35; padding-top: 2px; }
+.frise .point { position: relative; z-index: 1; justify-self: center; margin-left: 28px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--surface); border: 1px solid var(--sepia); color: var(--sepia); }
+.frise .quoi { padding-left: 22px; }
+.frise .quoi strong { font: 600 19px/1.2 var(--titre); }
+.frise .quoi .ou { display: block; font-size: 14px; color: var(--text-2); }
+.frise .quoi p { font-size: 15px; color: var(--text-2); margin-top: 2px; }
+.frise .incertain .quand::after { content: ' ≈'; }
+.frise .src { font-size: 12px; color: var(--text-3); margin-left: 6px; }
+.lien-p { color: var(--accent-hover); cursor: pointer; text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+:root[data-theme='dark'] .lien-p { color: var(--accent); }
+/* Galerie */
+.galerie { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 16px; }
+.doc { display: flex; flex-direction: column; gap: 6px; cursor: pointer; border: 0; background: none; padding: 0; text-align: left; }
+.doc .vignette { aspect-ratio: 4 / 5; width: 100%; display: grid; place-items: center; border: 6px solid #fffaf0; outline: 1px solid var(--border-strong); background: var(--photo-bg); box-shadow: 2px 3px 8px rgb(60 40 10 / .2); color: var(--photo-fg); overflow: hidden; }
+:root[data-theme='dark'] .doc .vignette { border-color: #3a3226; }
+.doc:nth-child(2n) .vignette { rotate: 1deg; }
+.doc:nth-child(3n) .vignette { rotate: -1.2deg; }
+.doc .vignette.pdf { background: repeating-linear-gradient(#fffdf6 0 13px, #e2d6bf 13px 14px); color: var(--hypothese); }
+:root[data-theme='dark'] .doc .vignette.pdf { background: repeating-linear-gradient(#3a3226 0 13px, #4a3f30 13px 14px); }
+.doc .vignette svg { width: 100%; height: 100%; }
+.doc .vignette.pdf svg { width: 40%; height: 40%; }
+.doc strong { font-size: 14px; font-weight: 600; line-height: 1.2; }
+.doc small { font-size: 12px; color: var(--text-3); }
+/* Sources */
+.sources { list-style: none; margin: 0; padding: 0; }
+.sources li { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 12px 0; border-bottom: 1px dotted var(--border-strong); }
+.sources .n { font: 600 20px var(--titre); color: var(--sepia); text-align: center; }
+.sources strong { display: block; font-weight: 600; }
+.sources small { color: var(--text-3); font-size: 13px; }
+.notes { padding: 18px 20px; font-style: italic; white-space: pre-line; background: repeating-linear-gradient(transparent 0 27px, var(--border) 27px 28px); line-height: 28px; border-left: 2px solid var(--femme); }
+/* Colonne famille */
+.famille-bloc + .famille-bloc { margin-top: 18px; }
+.famille-bloc h3 { font: 600 13px var(--texte); font-variant: small-caps; letter-spacing: .1em; color: var(--text-3); text-transform: lowercase; margin-bottom: 6px; }
+.parent-ligne { display: flex; align-items: center; gap: 10px; padding: 7px 8px; margin: 0 -8px; border-radius: 3px; cursor: pointer; }
+.parent-ligne:hover { background: var(--surface-2); }
+.parent-ligne .portrait { width: 34px; height: 40px; font-size: 14px; }
+.parent-ligne .t { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.parent-ligne .t span { font-weight: 600; }
+.parent-ligne small { color: var(--text-3); font-size: 13px; }
+.union-info { font-size: 13px; font-style: italic; color: var(--text-2); margin: -2px 0 4px 44px; }
+.a-chercher { list-style: none; margin: 0; padding: 0; }
+.a-chercher li { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; font-size: 15px; }
+.a-chercher .coche-a-chercher { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border: 1.5px solid var(--border-strong); border-radius: 3px; background: var(--surface); cursor: pointer; padding: 0; color: transparent; }
+.a-chercher li.fait .coche-a-chercher { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.a-chercher li.fait span { text-decoration: line-through; color: var(--text-3); }
+.boite-alerte { display: flex; gap: 10px; padding: 12px 14px; background: var(--indice-soft); color: var(--text); border-left: 3px solid var(--indice); font-size: 14px; }
+.boite-alerte .ic { color: var(--indice); margin-top: 2px; }
+.sections-tel { display: none; }
+[data-device='tel'] .fiche { padding: 0 0 30px; }
+[data-device='tel'] .fil { display: none; }
+[data-device='tel'] .en-tete-fiche { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; padding: 22px 16px; border-left: 0; border-right: 0; }
+[data-device='tel'] .en-tete-fiche .portrait { width: 104px; height: 126px; }
+[data-device='tel'] .en-tete-fiche h1 { font-size: 36px; }
+[data-device='tel'] .vie { justify-content: center; flex-direction: column; align-items: center; }
+[data-device='tel'] .etiquettes { justify-content: center; }
+[data-device='tel'] .actions-fiche { flex-direction: row; }
+[data-device='tel'] .sections-tel { display: flex; gap: 6px; overflow-x: auto; position: sticky; top: 0; z-index: 3; padding: 10px 16px; background: var(--bg) var(--grain); border-bottom: 1px solid var(--border); scrollbar-width: none; }
+.sections-tel button { flex: none; min-height: 34px; padding: 0 12px; border-radius: 20px; border: 1px solid var(--border-strong); background: var(--surface); cursor: pointer; font-size: 14px; }
+.sections-tel button[aria-current='true'] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+[data-device='tel'] .colonnes { grid-template-columns: 1fr; gap: 30px; margin-top: 22px; padding: 0 16px; }
+[data-device='tel'] .colonnes > div { gap: 30px; }
+[data-device='tel'] .frise::before { left: 13px; }
+[data-device='tel'] .frise li { grid-template-columns: 28px minmax(0, 1fr); }
+[data-device='tel'] .frise .point { grid-row: 1 / 3; margin: 0; }
+[data-device='tel'] .frise .quand { grid-column: 2; text-align: left; padding-left: 14px; }
+[data-device='tel'] .frise .quoi { grid-column: 2; padding-left: 14px; }
+[data-device='tel'] .galerie { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+[data-device='tel'] .doc strong { font-size: 13px; }
+
+/* ===================== FORMULAIRE ===================== */
+.formulaire { padding: 36px 48px 0; max-width: 860px; }
+.formulaire > h1 { font-size: 40px; }
+.formulaire > .intro { color: var(--text-2); margin: 6px 0 26px; }
+.form-bloc { padding: 24px 26px; }
+.form-bloc + .form-bloc { margin-top: 18px; }
+.form-bloc > h2 { font-size: 24px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.form-bloc > h2 .ic { color: var(--sepia); }
+.grille { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 18px; }
+.grille .large { grid-column: 1 / -1; }
+.champ { display: flex; flex-direction: column; gap: 6px; min-width: 0; position: relative; }
+.champ > label, .champ > .etiq { font-size: 14px; font-weight: 600; color: var(--text-2); }
+.champ .aide { font-size: 13px; color: var(--text-3); font-style: italic; }
+.saisie { width: 100%; min-height: 46px; padding: 0 12px; font-size: 16px; border: 1px solid var(--border-strong); border-radius: 3px; background: color-mix(in srgb, var(--surface) 70%, #fff); }
+:root[data-theme='dark'] .saisie { background: var(--surface-2); }
+.saisie:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+textarea.saisie { min-height: 110px; padding: 10px 12px; line-height: 1.5; resize: vertical; }
+select.saisie { appearance: none; padding-right: 30px; background-image: linear-gradient(45deg, transparent 50%, var(--text-3) 50%), linear-gradient(-45deg, transparent 50%, var(--text-3) 50%); background-size: 5px 5px; background-position: right 16px center, right 11px center; background-repeat: no-repeat; }
+.date-groupe { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 8px; }
+.sexe { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 3px; overflow: hidden; }
+.sexe label { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 0 14px; cursor: pointer; font-size: 15px; background: var(--surface); }
+.sexe label + label { border-left: 1px solid var(--border-strong); }
+.sexe input { position: absolute; opacity: 0; }
+.sexe label:has(input:checked) { background: var(--accent); color: var(--on-accent); }
+.case { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 15px; }
+.case input { width: 20px; height: 20px; accent-color: var(--accent); }
+.suggestions { position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 5; list-style: none; margin: 0; padding: 4px; border: 1px solid var(--border-strong); border-radius: 3px; background: var(--surface); box-shadow: 0 12px 30px -10px rgb(60 40 10 / .4); }
+.suggestions li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 2px; cursor: pointer; font-size: 15px; }
+.suggestions li[aria-selected='true'] { background: var(--accent-soft); }
+.suggestions small { margin-left: auto; color: var(--text-3); font-size: 12px; }
+.suggestions mark { background: none; color: inherit; font-weight: 700; }
+.photo-choix { display: flex; align-items: center; gap: 16px; }
+.photo-choix .portrait { width: 70px; height: 84px; }
+.plus-details { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 18px; padding: 14px; border: 1.5px dashed var(--border-strong); border-radius: 3px; background: transparent; color: var(--text-2); cursor: pointer; font-size: 15px; }
+.plus-details:hover { background: var(--surface); color: var(--text); }
+.plus-details .ic { transition: rotate .2s; }
+[data-bloc].ouvert .plus-details .ic { rotate: 180deg; }
+.avance { display: none; }
+[data-bloc].ouvert .avance { display: block; }
+.puces { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 6px; min-height: 46px; border: 1px solid var(--border-strong); border-radius: 3px; background: color-mix(in srgb, var(--surface) 70%, #fff); }
+:root[data-theme='dark'] .puces { background: var(--surface-2); }
+.puces .badge { gap: 6px; }
+.puces input { border: 0; background: none; flex: 1; min-width: 80px; font-size: 16px; outline: none; }
+.barre-actions { position: sticky; z-index: 10; bottom: 0; margin: 30px -48px 0; display: flex; justify-content: flex-end; gap: 10px; padding: 14px 48px; background: color-mix(in srgb, var(--surface) 92%, transparent); border-top: 1px solid var(--border-strong); backdrop-filter: blur(4px); }
+.barre-actions .note { margin-right: auto; align-self: center; font-size: 14px; color: var(--text-3); font-style: italic; }
+.entete-form-tel { display: none; }
+[data-ecran='formulaire'] .nav-bas { display: none; }
+[data-device='tel'] .formulaire { padding: 0 16px 40px; }
+[data-device='tel'] .formulaire > h1, [data-device='tel'] .formulaire > .intro, [data-device='tel'] .barre-actions { display: none; }
+[data-device='tel'] .entete-form-tel { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 10px 10px; border-bottom: 1px solid var(--border); }
+.entete-form-tel strong { font: 600 22px var(--titre); }
+[data-device='tel'] .form-bloc { padding: 18px 16px; margin-left: -16px; margin-right: -16px; border-left: 0; border-right: 0; box-shadow: none; }
+[data-device='tel'] .form-bloc + .form-bloc { margin-top: 12px; }
+[data-device='tel'] .grille { grid-template-columns: 1fr; gap: 14px; }
+[data-device='tel'] .formulaire { padding-top: 12px; }
+</style>
+</head>
+<body>
+<script src="commun/donnees.js"></script>
+<script src="commun/icones.js"></script>
+<script src="commun/cadre.js"></script>
+<script>
+const ic = GV.ic, P = GV.personnes, F = GV.fiche;
+const ORNEMENT = `<svg class="ornement" viewBox="0 0 120 12" fill="none" stroke="currentColor"><path d="M0 6h48M72 6h48"/><path d="M52 6c3-5 6-5 8 0 2 5 5 5 8 0-3-5-6-5-8 0-2 5-5 5-8 0z"/></svg>`;
+
+// ---------- Coquille de l'appli : barre de côté (ordi) ou barre du bas (téléphone) ----------
+function coquille(dev, actif, contenu, enteteTel = '') {
+  const nav = [['accueil', 'accueil', 'Accueil'], ['arbre', 'arbre', 'Arbre'], ['personnes', 'personnes', 'Personnes'], ['carte', 'carte', 'Carte'], ['reglages', 'reglages', 'Réglages']];
+  const el = ([k, i, t]) => `<button type="button" class="nav-el" ${['accueil', 'arbre'].includes(k) ? `data-aller="${k}"` : ''} ${k === actif ? 'aria-current="page"' : ''}>${ic(i, dev === 'tel' ? 22 : 19)}<span>${t}</span></button>`;
+  if (dev === 'ordi') return `
+    <div class="app">
+      <aside class="cote">
+        <div class="logo"><span class="logo-sceau">${ic('arbre', 20)}</span>GeneaView</div>
+        <div class="arbre-courant"><small>Arbre ouvert</small><strong>Famille Martin – Dubois</strong></div>
+        ${nav.map(el).join('')}
+        <div class="cote-pied">Connecté : <b>Camille</b><br/>247 personnes · 31 sources</div>
+      </aside>
+      <div class="principal defile">${contenu}</div>
+    </div>`;
+  return `
+    <div class="app tel">
+      <div class="barre-statut"><span>9:41</span><span>▂▄▆ ▮</span></div>
+      ${enteteTel}
+      <div class="principal defile">${contenu}</div>
+      <nav class="nav-bas">${nav.map(el).join('')}</nav>
+    </div>`;
+}
+
+// ---------- 1. ACCUEIL ----------
+function accueil(dev) {
+  const livres = GV.arbres.map((a) => `
+    <button type="button" class="livre" data-c="${a.couleur}" data-aller="arbre">
+      <h3>${a.nom}</h3>
+      <span class="meta">${a.personnes} personnes · ${a.generations} générations</span>
+      <span class="meta"><i>Racine : ${GV.nom(a.racine)}</i></span>
+      <span class="pied"><span>${a.role}</span><span>${a.modif}</span></span>
+    </button>`).join('');
+  return coquille(dev, 'accueil', `
+    <div class="accueil">
+      <div>
+        <p class="petites-caps bonjour">Bonsoir Camille</p>
+        <h1>Vos arbres</h1>
+        <div class="recherche">${ic('recherche', 20)}<input type="search" placeholder="Rechercher une personne, un lieu, une année…" aria-label="Rechercher" /><kbd>Ctrl K</kbd></div>
+        <div class="livres">
+          ${livres}
+          <button type="button" class="livre nouveau">${ic('plus', 26)}<span><b>Nouvel arbre</b><br/><small>ou importer un fichier GEDCOM</small></span></button>
+        </div>
+      </div>
+      <aside class="colonne-droite">
+        <section>
+          <h2>Ce mois-ci</h2>
+          ${GV.commemorations.map((c) => `<div class="commemo">${c.texte}<small>${c.date}</small></div>`).join('')}
+        </section>
+        <section>
+          <h2>Consultées récemment</h2>
+          <ul class="liste-simple">${GV.recents.map((id) => `<li data-aller="fiche">${GV.portrait(id, 'rond')}<span class="t"><span>${GV.nom(id)}</span><small>${P[id].ans}${P[id].lieu ? ' · ' + P[id].lieu : ''}</small></span></li>`).join('')}</ul>
+        </section>
+        <section>
+          <h2>À vérifier</h2>
+          ${GV.alertes.map((a) => `<div class="boite-alerte">${ic('alerte', 18)}<span><b>${GV.nom(a.id)}</b> (${P[a.id].ans}) : ${a.texte.toLowerCase()}.</span></div>`).join('')}
+        </section>
+      </aside>
+    </div>`, `<div class="entete-tel"><h1>GeneaView</h1><button class="btn btn-discret btn-rond" aria-label="Nouvel arbre">${ic('plus', 22)}</button></div>`);
+}
+
+// ---------- 2. ARBRE ----------
+function carte(id) {
+  const p = P[id];
+  return `
+    <div class="ajouts" role="group" aria-label="Ajouter à ${GV.nom(id)}">
+      <button type="button" data-aller="formulaire">${ic('plus', 14)} Parent</button>
+      <button type="button" data-aller="formulaire">${ic('plus', 14)} Conjoint</button>
+      <button type="button" data-aller="formulaire">${ic('plus', 14)} Enfant</button>
+    </div>
+    <button type="button" class="carte-p" data-sexe="${p.sexe}" data-aller="fiche" title="Clic : recentrer · double-clic : ouvrir la fiche">
+      ${GV.portrait(id)}
+      <span class="cp-txt"><span class="cp-nom">${GV.nom(id)}</span><span class="cp-dates ${p.vivant ? 'cp-vivant' : ''}">${p.ans}</span></span>
+      ${p.sosa ? `<span class="cp-sosa">${p.sosa}</span>` : ''}
+    </button>`;
+}
+function arbre(dev) {
+  const plan = GV.dessinerArbre({ w: 188, h: 70, gx: 18, gy: 46, carte });
+  const outils = dev === 'ordi'
+    ? `<div class="outils">
+        <h1>Famille Martin – Dubois</h1>
+        <div class="recherche">${ic('recherche', 18)}<input type="search" placeholder="Centrer sur…" aria-label="Centrer sur une personne" /></div>
+        <div class="choix" role="group" aria-label="Générations d’ancêtres"><button>2</button><button aria-pressed="true">3</button><button>4</button></div>
+        <div class="choix" role="group" aria-label="Type de vue"><button aria-pressed="true">${ic('arbre', 16)} Arbre</button><button>${ic('eventail', 16)} Éventail</button></div>
+        <button class="btn btn-petit">${ic('telecharger', 16)} PDF</button>
+      </div>`
+    : `<div class="outils"><h1>Martin – Dubois</h1><button class="btn btn-discret btn-rond" aria-label="Rechercher">${ic('recherche', 20)}</button><button class="btn btn-discret btn-rond" aria-label="Vue éventail">${ic('eventail', 20)}</button></div>`;
+  const feuille = dev === 'tel' ? `
+    <div class="feuille-bas">
+      <div class="poignee"></div>
+      <div class="qui">${GV.portrait('louise')}<div style="flex:1"><h2>Louise Martin</h2><span class="petites-caps">sosa 1 · née en 1952</span></div><button class="btn btn-primaire btn-petit" data-aller="fiche">Fiche</button></div>
+      <div class="actions"><button class="btn" data-aller="formulaire">+ Parent</button><button class="btn" data-aller="formulaire">+ Conjoint</button><button class="btn" data-aller="formulaire">+ Enfant</button></div>
+    </div>` : '';
+  return coquille(dev, 'arbre', `
+    <div class="arbre-ecran">
+      ${outils}
+      <div class="arbre-scene" aria-label="Arbre centré sur Louise Martin">${plan}</div>
+      <div class="zooms"><button class="btn btn-rond" data-zoom="+" aria-label="Zoomer">${ic('zoomPlus', 18)}</button><button class="btn btn-rond" data-zoom="-" aria-label="Dézoomer">${ic('zoomMoins', 18)}</button><button class="btn btn-rond" data-zoom="0" aria-label="Recentrer">${ic('centrer', 18)}</button></div>
+      ${dev === 'ordi' ? `<div class="legende"><span><i style="background:var(--homme)"></i>Homme</span><span><i style="background:var(--femme)"></i>Femme</span><span>Clic : recentrer · double-clic : fiche</span></div>` : ''}
+      ${feuille}
+    </div>`).replace('class="principal defile"', 'class="principal defile" style="overflow:hidden"');
+}
+
+// ---------- 3. FICHE ----------
+const vignette = (d) => d.type === 'pdf'
+  ? `<span class="vignette pdf">${ic('pdf', 40)}</span>`
+  : `<span class="vignette"><svg viewBox="0 0 40 50" preserveAspectRatio="xMidYMid slice"><circle cx="20" cy="19" r="8" fill="currentColor"/><path d="M3 52c0-11 7.5-17 17-17s17 6 17 17z" fill="currentColor"/></svg></span>`;
+const ligneP = (id, extra = '') => `<div class="parent-ligne" data-aller="fiche">${GV.portrait(id)}<span class="t"><span>${GV.nom(id)}</span><small>${P[id].ans}${extra}</small></span>${P[id].alerte ? `<span class="badge alerte" title="${P[id].alerte}" style="margin-left:auto">${ic('alerte', 13)}</span>` : ''}</div>`;
+function fiche(dev) {
+  const p = P[F.id];
+  const frise = F.evenements.map((e) => `
+    <li class="${e.incertain ? 'incertain' : ''}">
+      <span class="quand">${e.date}</span>
+      <span class="point">${ic(e.icone, 14)}</span>
+      <div class="quoi">
+        <strong>${e.type}</strong>${e.sources ? `<span class="src">${ic('sources', 12)} ${e.sources}</span>` : ''}
+        <span class="ou">${e.lieu}</span>
+        <p>${e.lien ? e.texte.replace(GV.nom(e.lien), `<span class="lien-p" data-aller="fiche">${GV.nom(e.lien)}</span>`) : e.texte}</p>
+      </div>
+    </li>`).join('');
+  return coquille(dev, 'arbre', `
+    <article class="fiche">
+      <nav class="fil"><a data-aller="arbre">Famille Martin – Dubois</a> › <span>Joseph Martin</span></nav>
+      <header class="en-tete-fiche feuille">
+        ${GV.portrait(F.id)}
+        <div>
+          <h1>Joseph Antoine <span class="nom-famille">Martin</span></h1>
+          <p class="surnom">dit ${F.surnom}</p>
+          <div class="vie">
+            <span>${ic('naissance', 16)} <b>${F.naissance.date}</b> à ${F.naissance.lieu}</span>
+            <span>${ic('deces', 16)} <b>${F.deces.date}</b> à ${F.deces.lieu}</span>
+          </div>
+          <div class="etiquettes"><span class="badge sosa">Sosa 4</span><span class="badge">${F.age}</span><span class="badge">${ic('profession', 13)} Forgeron</span><span class="badge preuve">${ic('sources', 13)} 4 sources</span></div>
+        </div>
+        <div class="actions-fiche">
+          <button class="btn btn-primaire" data-aller="formulaire">${ic('modifier', 16)} Modifier</button>
+          <button class="btn" data-aller="arbre">${ic('arbre', 16)} Voir dans l’arbre</button>
+          ${dev === 'ordi' ? `<button class="btn">${ic('telecharger', 16)} Fiche PDF</button>` : ''}
+        </div>
+      </header>
+      <nav class="sections-tel" aria-label="Sections">
+        <button data-section="chrono" aria-current="true">Chronologie</button><button data-section="famille">Famille</button><button data-section="docs">Documents</button><button data-section="sources">Sources</button><button data-section="notes">Notes</button>
+      </nav>
+      <div class="colonnes">
+        <div>
+          <section data-ancre="chrono"><div class="rubrique"><h2>Chronologie</h2><span class="compte">${F.evenements.length} événements</span></div><ol class="frise">${frise}</ol></section>
+          <section data-ancre="docs"><div class="rubrique"><h2>Documents</h2><span class="compte">${F.documents.length}</span><button class="btn btn-petit btn-discret">${ic('envoyer', 15)} Ajouter</button></div>
+            <div class="galerie">${F.documents.map((d) => `<button class="doc">${vignette(d)}<strong>${d.titre}</strong><small>${d.date}${d.pages ? ` · PDF ${d.pages} p.` : ''}</small></button>`).join('')}</div></section>
+          <section data-ancre="sources"><div class="rubrique"><h2>Sources</h2><span class="compte">${F.sources.length}</span></div>
+            <ol class="sources">${F.sources.map((s, i) => `<li><span class="n">${i + 1}</span><span><strong>${s.titre}</strong><small>${s.type} · ${s.cote}</small></span><span class="badge ${s.fiabilite}">${GV.fiabilite[s.fiabilite]}</span></li>`).join('')}</ol></section>
+          <section data-ancre="notes"><div class="rubrique"><h2>Notes</h2></div><div class="notes feuille">${F.notes}</div></section>
+        </div>
+        <div>
+          <section data-ancre="famille" class="feuille" style="padding:20px 22px">
+            <div class="rubrique"><h2>Famille</h2></div>
+            <div class="famille-bloc"><h3>Parents</h3>${F.parents.map((id) => ligneP(id)).join('')}</div>
+            <div class="famille-bloc"><h3>Épouse</h3>${F.conjoints.map((c) => ligneP(c.id) + `<p class="union-info">${c.union} le ${c.date}</p>`).join('')}</div>
+            <div class="famille-bloc"><h3>Enfant</h3>${F.enfants.map((id) => ligneP(id)).join('')}</div>
+            <div class="famille-bloc"><h3>Sœur</h3>${F.fratrie.map((id) => ligneP(id)).join('')}</div>
+          </section>
+          <section><div class="rubrique"><h2>À chercher</h2></div>
+            <ul class="a-chercher">${F.aChercher.map((t) => `<li class="${t.fait ? 'fait' : ''}"><button class="coche-a-chercher" aria-label="Fait">${ic('coche', 14)}</button><span>${t.texte}</span></li>`).join('')}</ul>
+          </section>
+          <div class="boite-alerte">${ic('alerte', 18)}<span>Sa sœur <b>Marie Martin</b> aurait plus de 110 ans : date de décès manquante ?</span></div>
+        </div>
+      </div>
+      ${ORNEMENT}
+    </article>`, `<div class="entete-tel"><button class="btn btn-discret btn-rond" data-aller="arbre" aria-label="Retour">${ic('gauche', 22)}</button><h1 style="font-size:20px">Fiche</h1><button class="btn btn-discret btn-rond" aria-label="Plus d’actions">${ic('plusDe', 22)}</button></div>`);
+}
+
+// ---------- 4. FORMULAIRE ----------
+function formulaire(dev) {
+  const ouvert = dev === 'ordi' ? 'ouvert' : '';
+  const contenu = `
+    <div class="formulaire ${ouvert}" data-bloc>
+      <h1>Modifier Joseph Martin</h1>
+      <p class="intro">Seuls le prénom et le nom sont nécessaires. Tout le reste peut attendre.</p>
+      <section class="form-bloc feuille">
+        <h2>${ic('personnes', 20)} Identité</h2>
+        <div class="grille">
+          <div class="champ"><label>Prénoms</label><input class="saisie" value="Joseph Antoine" /></div>
+          <div class="champ"><label>Nom</label><input class="saisie" value="Martin" /></div>
+          <div class="champ"><span class="etiq">Sexe</span><div class="sexe" role="radiogroup"><label><input type="radio" name="s-${dev}" checked />Homme</label><label><input type="radio" name="s-${dev}" />Femme</label><label><input type="radio" name="s-${dev}" />Inconnu</label></div></div>
+          <div class="champ"><span class="etiq">&nbsp;</span><label class="case"><input type="checkbox" /> Personne vivante</label></div>
+          <div class="champ large"><span class="etiq">Photo principale</span><div class="photo-choix">${GV.portrait('joseph')}<button class="btn btn-petit">${ic('photo', 16)} Changer</button><span class="aide">Réduite automatiquement avant l’envoi.</span></div></div>
+        </div>
+      </section>
+      <section class="form-bloc feuille">
+        <h2>${ic('naissance', 20)} Naissance</h2>
+        <div class="grille">
+          <div class="champ"><label>Date</label>
+            <div class="date-groupe"><select class="saisie" aria-label="Précision"><option>Exacte</option><option selected>Vers</option><option>Avant</option><option>Après</option><option>Entre…</option></select><input class="saisie" value="1890" inputmode="numeric" /></div>
+            <span class="aide">Ex. : 1890 · 03/1890 · 12/03/1890</span></div>
+          <div class="champ"><label>Lieu</label><input class="saisie" value="Saint-Fl" />
+            <ul class="suggestions" role="listbox">
+              <li aria-selected="true">${ic('lieu', 16)} <span><mark>Saint-Fl</mark>our, Cantal</span><small>14 événements</small></li>
+              <li>${ic('lieu', 16)} <span><mark>Saint-Fl</mark>orent, Cher</span><small>2</small></li>
+              <li>${ic('plus', 16)} <span>Nouveau lieu « Saint-Fl… »</span></li>
+            </ul></div>
+        </div>
+      </section>
+      <section class="form-bloc feuille">
+        <h2>${ic('deces', 20)} Décès</h2>
+        <div class="grille">
+          <div class="champ"><label>Date</label><div class="date-groupe"><select class="saisie" aria-label="Précision"><option selected>Exacte</option><option>Vers</option></select><input class="saisie" value="12/03/1962" /></div></div>
+          <div class="champ"><label>Lieu</label><input class="saisie" value="Aurillac, Cantal" /></div>
+        </div>
+        <button type="button" class="plus-details" data-plus aria-expanded="${!!ouvert}">${ic('bas', 18)} Plus de détails <small>(surnom, professions, notes…)</small></button>
+        <div class="avance" style="margin-top:20px">
+          <div class="grille">
+            <div class="champ"><label>Nom d’usage</label><input class="saisie" placeholder="Nom marital, de jeune fille…" /></div>
+            <div class="champ"><label>Surnom</label><input class="saisie" value="Le Grand Jo" /></div>
+            <div class="champ large"><span class="etiq">Professions</span><div class="puces"><span class="badge">Forgeron ×</span><span class="badge">Maréchal-ferrant ×</span><input placeholder="Ajouter…" /></div></div>
+            <div class="champ large"><label>Notes</label><textarea class="saisie">${F.notes}</textarea></div>
+          </div>
+        </div>
+      </section>
+      <div class="barre-actions"><span class="note">Modifié le 18 octobre 2026</span><button class="btn" data-aller="fiche">Annuler</button><button class="btn btn-primaire" data-aller="fiche">${ic('coche', 16)} Enregistrer</button></div>
+    </div>`;
+  return coquille(dev, 'arbre', contenu, `<div class="entete-form-tel"><button class="btn btn-discret btn-petit" data-aller="fiche">Annuler</button><strong>Joseph Martin</strong><button class="btn btn-primaire btn-petit" data-aller="fiche">OK</button></div>`);
+}
+
+GV.monter({
+  lettre: 'A', nom: 'Archive',
+  ecrans: {
+    accueil: { titre: 'Accueil', rendre: accueil },
+    arbre: { titre: 'Arbre', rendre: arbre },
+    fiche: { titre: 'Fiche', rendre: fiche },
+    formulaire: { titre: 'Formulaire', rendre: formulaire },
+  },
+});
+</script>
+</body>
+</html>

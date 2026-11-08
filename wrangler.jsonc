@@ -1,0 +1,38 @@
+// Configuration Cloudflare : le site (dossier "dist") + le petit serveur (dossier "worker")
+// qui gère la connexion, la base de données D1 et les fichiers R2.
+{
+  "name": "geneaview",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-14",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    // Les adresses /api/... passent par le serveur, tout le reste est servi directement
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "geneaview",
+      // À remplacer par l'identifiant donné par "npx wrangler d1 create geneaview" (voir TUTO.md)
+      "database_id": "REMPLACE-PAR-TON-DATABASE-ID",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // Photos et documents. Le bucket n'est JAMAIS public : tout passe par le serveur.
+  "r2_buckets": [
+    { "binding": "FILES", "bucket_name": "geneaview-fichiers" }
+  ],
+  // Rappels d'anniversaires : Cloudflare réveille le serveur à 7 h et 8 h UTC,
+  // il n'envoie qu'à 9 h heure de Paris (le bon créneau selon l'heure d'été / d'hiver).
+  "triggers": { "crons": ["0 7 * * *", "0 8 * * *"] },
+  "vars": {
+    // Clé PUBLIQUE des notifications (pas secrète). La clé privée est un secret Cloudflare
+    // (VAPID_PRIVATE_KEY). Laisse vide tant que tu n'as pas lancé "npm run cles-push" (voir TUTO.md).
+    "VAPID_PUBLIC_KEY": "",
+    // Adresse de TON site (à remplacer après la mise en ligne), transmise aux services de notification (Apple, Google) comme contact
+    "VAPID_SUBJECT": "https://geneaview.TON-SOUS-DOMAINE.workers.dev"
+  },
+  "observability": { "enabled": true }
+}
